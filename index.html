@@ -3,6 +3,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Você me ama?</title>
   <style>
     body {
@@ -13,7 +14,6 @@
       color: #ff6781;
     }
 
-    /* Responsive container for centering and max width */
     #conteudoPrincipal, #telaSenha {
       max-width: 900px;
       margin-left: auto;
@@ -49,11 +49,9 @@
       box-sizing: border-box;
     }
 
-    /* Keep #nao absolute and allow it to move freely */
     #nao {
       position: absolute;
       transition: left 0.3s ease, top 0.3s ease;
-      /* No max-width or fixed sizing that limits movement */
     }
 
     #conteudoPrincipal {
@@ -125,7 +123,6 @@
       max-width: 100%;
     }
 
-    /* Responsive adjustments */
     @media (max-width: 600px) {
       body {
         margin-top: 30px;
@@ -160,7 +157,6 @@
         width: 90px;
       }
 
-      /* Stack movie containers nicely */
       #segundaTela p,
       #segundaTela .movie-container {
         max-width: 100%;
@@ -175,7 +171,6 @@
   </style>
 </head>
 <body>
-  <!-- Tela de senha -->
   <div id="telaSenha">
     <h2>Digite a senha para acessar a surpresa 💌</h2>
     <p>Dica: Naxb</p>
@@ -189,9 +184,7 @@
     <p id="mensagemErro" style="color: red;"></p>
   </div>
 
-  <!-- Conteúdo principal (inicialmente oculto) -->
   <div id="conteudoPrincipal">
-    <!-- Tela Personalizada -->
     <div id="telaTextoPersonalizado" style="display: none;">
       <h1>PARABÉNS!!!💌</h1>
       <p>
@@ -205,14 +198,12 @@
       <button onclick="mostrarTelaAmor()">Avançar</button>
     </div>
 
-    <!-- Primeira Tela -->
     <div id="primeiraTela" style="display: none;">
       <h1>Você me ama?</h1>
       <button onclick="mostrarSegundaTela()">Sim</button>
       <button id="nao">Não</button>
     </div>
 
-    <!-- Segunda Tela -->
     <div id="segundaTela" style="display: none;">
       <h1>NOSSA PLAYLIST JA TEM 1 ANO!!</h1>
       <iframe
