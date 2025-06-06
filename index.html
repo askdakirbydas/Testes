@@ -1,0 +1,392 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Você me ama?</title>
+  <style>
+    body {
+      font-family: Poppins, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+      background-color: #FFCCFF;
+      color: #ff6781;
+    }
+
+    /* Responsive container for centering and max width */
+    #conteudoPrincipal, #telaSenha {
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0 15px;
+      box-sizing: border-box;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      cursor: pointer;
+      margin: 20px;
+      border-radius: 100px;
+      color: #fff;
+      background: #ff6781;
+      border: none;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+    button:hover,
+    button:focus {
+      background-color: #e34f6f;
+      transform: scale(1.05);
+      outline: none;
+    }
+
+    input[type="password"] {
+      padding: 10px;
+      font-size: 18px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+
+    /* Keep #nao absolute and allow it to move freely */
+    #nao {
+      position: absolute;
+      transition: left 0.3s ease, top 0.3s ease;
+      /* No max-width or fixed sizing that limits movement */
+    }
+
+    #conteudoPrincipal {
+      display: none;
+    }
+
+    .movie-container {
+      perspective: 500px;
+      display: inline-block;
+      margin: 0 -20px;
+      vertical-align: top;
+      transition: transform 0.5s;
+    }
+
+    .movie-container img {
+      transition: transform 0.5s, width 0.5s, height 0.5s;
+      width: 100px;
+      height: auto;
+      transform: rotateX(0deg) rotateY(25deg);
+      transform-style: preserve-3d;
+      border-radius: 4px;
+      border: 2px solid rgba(0, 0, 0, 0.1);
+      object-fit: cover;
+      position: relative;
+      z-index: 1;
+      max-width: 100%;
+    }
+
+    .movie-container:hover img {
+      transform: rotateX(0deg) rotateY(10deg) scale(1.1);
+      width: 110px;
+      z-index: 10;
+    }
+
+    .movie-container:hover ~ .movie-container {
+      transform: translateX(20px);
+    }
+
+    .movie-container:has(+ .movie-container:hover) {
+      transform: translateX(-20px);
+    }
+
+    .coracao {
+      position: fixed;
+      bottom: 0;
+      font-size: 24px;
+      color: #ff6781;
+      animation: subir 4s linear forwards;
+      z-index: 999;
+      pointer-events: none;
+    }
+
+    @keyframes subir {
+      0% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh);
+        opacity: 0;
+      }
+    }
+
+    iframe {
+      border-radius: 12px;
+      width: 100%;
+      height: 352px;
+      border: none;
+      max-width: 100%;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+      body {
+        margin-top: 30px;
+      }
+
+      h1,
+      h2 {
+        font-size: 1.5rem;
+      }
+
+      button {
+        font-size: 16px;
+        padding: 8px 16px;
+        margin: 15px 10px;
+      }
+
+      input[type="password"] {
+        font-size: 16px;
+        padding: 8px;
+      }
+
+      .movie-container {
+        margin: 0 5px 15px;
+        display: inline-block;
+      }
+
+      .movie-container img {
+        width: 80px;
+      }
+
+      .movie-container:hover img {
+        width: 90px;
+      }
+
+      /* Stack movie containers nicely */
+      #segundaTela p,
+      #segundaTela .movie-container {
+        max-width: 100%;
+        display: inline-block;
+        margin: 5px 2px;
+      }
+
+      iframe {
+        height: 250px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Tela de senha -->
+  <div id="telaSenha">
+    <h2>Digite a senha para acessar a surpresa 💌</h2>
+    <p>Dica: Naxb</p>
+    <p>Dica2: A chave que você procura está no primeiro mês</p>
+    <input type="password" id="senhaInput" />
+    <label>
+      <input type="checkbox" onclick="mostrarOuOcultarSenha()" /> Mostrar senha
+    </label>
+    <br />
+    <button onclick="verificarSenha()">Entrar</button>
+    <p id="mensagemErro" style="color: red;"></p>
+  </div>
+
+  <!-- Conteúdo principal (inicialmente oculto) -->
+  <div id="conteudoPrincipal">
+    <!-- Tela Personalizada -->
+    <div id="telaTextoPersonalizado" style="display: none;">
+      <h1>PARABÉNS!!!💌</h1>
+      <p>
+        A resposta era Eros! É uma palavra grega que normalmente associamos ao
+        amor mais ligado ao lado “sexual”. Mas ela também significa um amor
+        diferente do Philos, que é o amor entre amigos, baseado na amizade e na
+        lealdade. Para o filósofo Platão, o Eros ajuda a lembrar a beleza da
+        alma e faz a gente entender a verdade espiritual, transformando o amor
+        em uma apreciação da beleza que vem de dentro da alma. ♥
+      </p>
+      <button onclick="mostrarTelaAmor()">Avançar</button>
+    </div>
+
+    <!-- Primeira Tela -->
+    <div id="primeiraTela" style="display: none;">
+      <h1>Você me ama?</h1>
+      <button onclick="mostrarSegundaTela()">Sim</button>
+      <button id="nao">Não</button>
+    </div>
+
+    <!-- Segunda Tela -->
+    <div id="segundaTela" style="display: none;">
+      <h1>NOSSA PLAYLIST JA TEM 1 ANO!!</h1>
+      <iframe
+        style="border-radius: 12px"
+        src="https://open.spotify.com/embed/playlist/5MYI2N4FUItdLccC9C622N?utm_source=generator"
+        width="100%"
+        height="352"
+        frameborder="0"
+        allowfullscreen=""
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy"
+      ></iframe>
+
+      <h1>Bó relembrar um pouco desse último ano que passou</h1>
+      <p>Filmes que a gente já viu juntinho ♥:</p>
+
+      <div class="movie-container">
+        <img
+          src="https://a.ltrbxd.com/resized/sm/upload/e9/dh/nn/5w/fKSZl8ONN7DQh5ujgdObRIFmhiZ-0-1000-0-1500-crop.jpg?v=042d149015"
+          alt="Top Gun"
+        />
+      </div>
+
+      <div class="movie-container">
+        <img
+          src="https://a.ltrbxd.com/resized/sm/upload/ay/bp/kl/1y/uBfQ7IGpi0jXSP3GPCzp9Pzm10v-0-1000-0-1500-crop.jpg?v=116621c401"
+          alt="Brilho Eterno"
+        />
+      </div>
+
+      <div class="movie-container">
+        <img
+          src="https://a.ltrbxd.com/resized/film-poster/4/5/4/0/9/45409-shutter-island-0-1000-0-1500-crop.jpg?v=85dd4c38e3"
+          alt="Ilha do Medo"
+        />
+      </div>
+
+      <div class="movie-container">
+        <img
+          src="https://a.ltrbxd.com/resized/film-poster/5/1/3/4/4/51344-shrek-0-1000-0-1500-crop.jpg?v=cd09df2c75"
+          alt="Shrek"
+        />
+      </div>
+
+      <p>Nossas séries favoritas:</p>
+
+      <div class="movie-container">
+        <img
+          src="https://th.bing.com/th/id/OIP.J5YoNfUCUdWD8G90Wo_pMgHaK5?w=680&h=1000&rs=1&pid=ImgDetMain"
+          alt="Gossip Girl"
+        />
+      </div>
+
+      <div class="movie-container">
+        <img
+          src="https://m.media-amazon.com/images/M/MV5BZmU5NTcwNjktODIwMi00ZmZkLTk4ZWUtYzVjZWQ5ZTZjN2RlXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_FMjpg_UX1000_.jpg"
+          alt="The Walking Dead"
+        />
+      </div>
+
+      <div class="movie-container">
+        <img
+          src="https://th.bing.com/th/id/OIP.GD7nvI4PYbYZX5NGd4xZtAHaK-?rs=1&pid=ImgDetMain"
+          alt="Stranger Things"
+        />
+      </div>
+
+      <div class="movie-container">
+        <img
+          src="https://images.justwatch.com/poster/178170731/s718/gilmore-girls.jpg"
+          alt="Gilmore Girls"
+        />
+      </div>
+
+      <div class="painel">
+        <h1>Feliz Dia dos Namorados 💘</h1>
+        <img
+          src="https://media1.giphy.com/media/KztT2c4u8mYYUiMKdJ/giphy.gif"
+          alt="gif fofo"
+        />
+        <img
+          src="https://i.imgur.com/gLTpk5F.jpeg"
+          alt="Foto especial"
+          style="width: 300px; border-radius: 10px; margin: 20px auto; display: block"
+        />
+        <img
+          src="https://i.imgur.com/DZwwxZ7.jpeg"
+          alt="Foto especial"
+          style="width: 300px; border-radius: 10px; margin: 20px auto; display: block"
+        />
+        <img
+          src="https://i.imgur.com/kCvxuun.jpeg"
+          alt="Foto especial"
+          style="width: 300px; border-radius: 10px; margin: 20px auto; display: block"
+        />
+        <img
+          src="https://i.imgur.com/CCB0g5j.jpeg"
+          alt="Foto especial"
+          style="width: 300px; border-radius: 10px; margin: 20px auto; display: block"
+        />
+
+        <br /><br />
+        <button onclick="mostrarCoordenadaFixa()">Mostrar local especial 🌍</button>
+        <p id="coordenadaFixa" style="font-size: 18px; color: #333"></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const senhaCorreta = "Eros";
+
+    function verificarSenha() {
+      const senha = document.getElementById("senhaInput").value;
+      const erro = document.getElementById("mensagemErro");
+
+      if (senha === senhaCorreta) {
+        document.getElementById("telaSenha").style.display = "none";
+        document.getElementById("conteudoPrincipal").style.display = "block";
+        document.getElementById("telaTextoPersonalizado").style.display = "block";
+        iniciarCoracoes();
+      } else {
+        erro.textContent = "Senha incorreta! Tente novamente.";
+      }
+    }
+
+    const botaoNao = document.getElementById("nao");
+    botaoNao.addEventListener("mouseover", () => {
+      const larguraJanela = window.innerWidth - botaoNao.offsetWidth;
+      const alturaJanela = window.innerHeight - botaoNao.offsetHeight;
+      const novaEsquerda = Math.random() * larguraJanela;
+      const novoTopo = Math.random() * alturaJanela;
+      botaoNao.style.left = `${novaEsquerda}px`;
+      botaoNao.style.top = `${novoTopo}px`;
+    });
+
+    function mostrarSegundaTela() {
+      document.getElementById("primeiraTela").style.display = "none";
+      document.getElementById("segundaTela").style.display = "block";
+    }
+
+    function mostrarCoordenadaFixa() {
+      const coordenada = `-3.797425, -38.495614`;
+      const elemento = document.getElementById("coordenadaFixa");
+      elemento.innerText = `📍 ${coordenada}`;
+    }
+
+    function mostrarOuOcultarSenha() {
+      const campoSenha = document.getElementById("senhaInput");
+      campoSenha.type = campoSenha.type === "password" ? "text" : "password";
+    }
+    function mostrarTelaAmor() {
+      document.getElementById("telaTextoPersonalizado").style.display = "none";
+      document.getElementById("primeiraTela").style.display = "block";
+    }
+
+    function criarCoracao() {
+      const coracao = document.createElement("div");
+      coracao.classList.add("coracao");
+      coracao.innerText = "💖";
+      coracao.style.left = Math.random() * 100 + "vw";
+      coracao.style.fontSize = 20 + Math.random() * 20 + "px";
+      coracao.style.animationDuration = 3 + Math.random() * 2 + "s";
+      document.body.appendChild(coracao);
+
+      setTimeout(() => {
+        coracao.remove();
+      }, 5000);
+    }
+
+    let coracoesIntervalo;
+
+    function iniciarCoracoes() {
+      coracoesIntervalo = setInterval(criarCoracao, 300);
+    }
+  </script>
+</body>
+</html>
