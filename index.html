@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Você me ama?</title>
   <style>
     body {
@@ -58,17 +57,29 @@
       display: none;
     }
 
+    /* Container flexível para os filmes e séries */
+    .movie-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      padding: 0 10px;
+      margin-bottom: 20px;
+    }
+
     .movie-container {
       perspective: 500px;
-      display: inline-block;
-      margin: 0 -20px;
+      flex: 0 0 auto;
+      margin: 0;
       vertical-align: top;
       transition: transform 0.5s;
+      width: 100px;
+      /* fixa a largura para melhor alinhamento */
     }
 
     .movie-container img {
       transition: transform 0.5s, width 0.5s, height 0.5s;
-      width: 100px;
+      width: 100%;
       height: auto;
       transform: rotateX(0deg) rotateY(25deg);
       transform-style: preserve-3d;
@@ -77,12 +88,12 @@
       object-fit: cover;
       position: relative;
       z-index: 1;
-      max-width: 100%;
+      display: block;
     }
 
     .movie-container:hover img {
       transform: rotateX(0deg) rotateY(10deg) scale(1.1);
-      width: 110px;
+      width: 110%;
       z-index: 10;
     }
 
@@ -144,17 +155,18 @@
         padding: 8px;
       }
 
-      .movie-container {
-        margin: 0 5px 15px;
-        display: inline-block;
+      /* Ajuste para os filmes e séries no celular */
+      .movie-list {
+        gap: 10px;
+        padding: 0 5px;
       }
 
-      .movie-container img {
+      .movie-container {
         width: 80px;
       }
 
       .movie-container:hover img {
-        width: 90px;
+        width: 110%;
       }
 
       #segundaTela p,
@@ -195,7 +207,7 @@
         alma e faz a gente entender a verdade espiritual, transformando o amor
         em uma apreciação da beleza que vem de dentro da alma. ♥
       </p>
-      <button onclick="mostrarTelaAmor()">Avançar</button>
+      <button onclick="mostrarPrimeiraTela()">Avançar</button>
     </div>
 
     <div id="primeiraTela" style="display: none;">
@@ -220,62 +232,66 @@
       <h1>Bó relembrar um pouco desse último ano que passou</h1>
       <p>Filmes que a gente já viu juntinho ♥:</p>
 
-      <div class="movie-container">
-        <img
-          src="https://a.ltrbxd.com/resized/sm/upload/e9/dh/nn/5w/fKSZl8ONN7DQh5ujgdObRIFmhiZ-0-1000-0-1500-crop.jpg?v=042d149015"
-          alt="Top Gun"
-        />
-      </div>
+      <div class="movie-list">
+        <div class="movie-container">
+          <img
+            src="https://a.ltrbxd.com/resized/sm/upload/e9/dh/nn/5w/fKSZl8ONN7DQh5ujgdObRIFmhiZ-0-1000-0-1500-crop.jpg?v=042d149015"
+            alt="Top Gun"
+          />
+        </div>
 
-      <div class="movie-container">
-        <img
-          src="https://a.ltrbxd.com/resized/sm/upload/ay/bp/kl/1y/uBfQ7IGpi0jXSP3GPCzp9Pzm10v-0-1000-0-1500-crop.jpg?v=116621c401"
-          alt="Brilho Eterno"
-        />
-      </div>
+        <div class="movie-container">
+          <img
+            src="https://a.ltrbxd.com/resized/sm/upload/ay/bp/kl/1y/uBfQ7IGpi0jXSP3GPCzp9Pzm10v-0-1000-0-1500-crop.jpg?v=116621c401"
+            alt="Brilho Eterno"
+          />
+        </div>
 
-      <div class="movie-container">
-        <img
-          src="https://a.ltrbxd.com/resized/film-poster/4/5/4/0/9/45409-shutter-island-0-1000-0-1500-crop.jpg?v=85dd4c38e3"
-          alt="Ilha do Medo"
-        />
-      </div>
+        <div class="movie-container">
+          <img
+            src="https://a.ltrbxd.com/resized/film-poster/4/5/4/0/9/45409-shutter-island-0-1000-0-1500-crop.jpg?v=85dd4c38e3"
+            alt="Ilha do Medo"
+          />
+        </div>
 
-      <div class="movie-container">
-        <img
-          src="https://a.ltrbxd.com/resized/film-poster/5/1/3/4/4/51344-shrek-0-1000-0-1500-crop.jpg?v=cd09df2c75"
-          alt="Shrek"
-        />
+        <div class="movie-container">
+          <img
+            src="https://a.ltrbxd.com/resized/film-poster/5/1/3/4/4/51344-shrek-0-1000-0-1500-crop.jpg?v=cd09df2c75"
+            alt="Shrek"
+          />
+        </div>
       </div>
 
       <p>Nossas séries favoritas:</p>
 
-      <div class="movie-container">
-        <img
-          src="https://th.bing.com/th/id/OIP.J5YoNfUCUdWD8G90Wo_pMgHaK5?w=680&h=1000&rs=1&pid=ImgDetMain"
-          alt="Gossip Girl"
-        />
-      </div>
+      <div class="movie-list">
+        <div class="movie-container">
+          <img
+            src="https://th.bing.com/th/id/OIP.J5YoNfUCUdWD8G90Wo_pMgHaK5?w=680&h=1000&rs=1&pid=ImgDetMain"
+            alt="Gossip Girl"
+          />
+        </div>
 
-      <div class="movie-container">
-        <img
-          src="https://m.media-amazon.com/images/M/MV5BZmU5NTcwNjktODIwMi00ZmZkLTk4ZWUtYzVjZWQ5ZTZjN2RlXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_FMjpg_UX1000_.jpg"
-          alt="The Walking Dead"
-        />
-      </div>
+        <div class="movie-container">
+          <img
+            src="https://m.media-amazon.com/images/M/MV5BZmU5NTcwNjktODIwMi00ZmZkLTk4ZWUtYzVjZWQ5ZTZjN2RlXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_FMjpg_UX1000_.jpg"
+            alt="The Walking Dead"
+          />
+        </div>
 
-      <div class="movie-container">
-        <img
-          src="https://th.bing.com/th/id/OIP.GD7nvI4PYbYZX5NGd4xZtAHaK-?rs=1&pid=ImgDetMain"
-          alt="Stranger Things"
-        />
-      </div>
+        <div class="movie-container">
+          <img
+            src="https://th.bing.com/th/id/OIP.GD7nvI4PYbYZX5NGd4xZtAHaK-?rs=1&pid=ImgDetMain"
+            alt="Stranger Things"
+          />
+        </div>
 
-      <div class="movie-container">
-        <img
-          src="https://images.justwatch.com/poster/178170731/s718/gilmore-girls.jpg"
-          alt="Gilmore Girls"
-        />
+        <div class="movie-container">
+          <img
+            src="https://images.justwatch.com/poster/178170731/s718/gilmore-girls.jpg"
+            alt="Gilmore Girls"
+          />
+        </div>
       </div>
 
       <div class="painel">
@@ -329,54 +345,46 @@
       }
     }
 
-    const botaoNao = document.getElementById("nao");
-    botaoNao.addEventListener("mouseover", () => {
-      const larguraJanela = window.innerWidth - botaoNao.offsetWidth;
-      const alturaJanela = window.innerHeight - botaoNao.offsetHeight;
-      const novaEsquerda = Math.random() * larguraJanela;
-      const novoTopo = Math.random() * alturaJanela;
-      botaoNao.style.left = `${novaEsquerda}px`;
-      botaoNao.style.top = `${novoTopo}px`;
-    });
+    function mostrarOuOcultarSenha() {
+      const senhaInput = document.getElementById("senhaInput");
+      senhaInput.type = senhaInput.type === "password" ? "text" : "password";
+    }
+
+    function mostrarPrimeiraTela() {
+      document.getElementById("telaTextoPersonalizado").style.display = "none";
+      document.getElementById("primeiraTela").style.display = "block";
+    }
 
     function mostrarSegundaTela() {
       document.getElementById("primeiraTela").style.display = "none";
       document.getElementById("segundaTela").style.display = "block";
     }
 
-    function mostrarCoordenadaFixa() {
-      const coordenada = `-3.797425, -38.495614`;
-      const elemento = document.getElementById("coordenadaFixa");
-      elemento.innerText = `📍 ${coordenada}`;
-    }
-
-    function mostrarOuOcultarSenha() {
-      const campoSenha = document.getElementById("senhaInput");
-      campoSenha.type = campoSenha.type === "password" ? "text" : "password";
-    }
-    function mostrarTelaAmor() {
-      document.getElementById("telaTextoPersonalizado").style.display = "none";
-      document.getElementById("primeiraTela").style.display = "block";
-    }
-
-    function criarCoracao() {
-      const coracao = document.createElement("div");
-      coracao.classList.add("coracao");
-      coracao.innerText = "💖";
-      coracao.style.left = Math.random() * 100 + "vw";
-      coracao.style.fontSize = 20 + Math.random() * 20 + "px";
-      coracao.style.animationDuration = 3 + Math.random() * 2 + "s";
-      document.body.appendChild(coracao);
-
-      setTimeout(() => {
-        coracao.remove();
-      }, 5000);
-    }
-
-    let coracoesIntervalo;
-
     function iniciarCoracoes() {
-      coracoesIntervalo = setInterval(criarCoracao, 300);
+      setInterval(() => {
+        const coracao = document.createElement("div");
+        coracao.className = "coracao";
+        coracao.style.left = Math.random() * window.innerWidth + "px";
+        coracao.textContent = "💖";
+        document.body.appendChild(coracao);
+        setTimeout(() => {
+          coracao.remove();
+        }, 4000);
+      }, 500);
+    }
+
+    const botaoNao = document.getElementById("nao");
+    botaoNao.addEventListener("mouseenter", () => {
+      const botao = botaoNao;
+      const x = Math.random() * (window.innerWidth - botao.offsetWidth);
+      const y = Math.random() * (window.innerHeight - botao.offsetHeight);
+      botao.style.left = x + "px";
+      botao.style.top = y + "px";
+    });
+
+    function mostrarCoordenadaFixa() {
+      const coord = "Latitude: -23.55052, Longitude: -46.633308";
+      document.getElementById("coordenadaFixa").textContent = coord;
     }
   </script>
 </body>
